@@ -1,4 +1,4 @@
-package com.github.api;
+package com.github.api.cases;
 
 import javax.servlet.ServletException;
 
@@ -8,7 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.github.api.cases.SimpleGetEndpoint;
+import com.github.api.App;
+import com.github.api.ClientFactory;
 import com.github.api.cases.dto.SimpleGetDTO;
 
 public class ClientFactoryTest {
