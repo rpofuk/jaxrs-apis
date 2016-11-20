@@ -25,16 +25,18 @@ public class App {
 
 	private final UndertowJaxrsServer server = new UndertowJaxrsServer();
 
+	private static App myServer;
+
 	public App(Integer port, String host) {
 		Undertow.Builder serverBuilder = Undertow.builder().addHttpListener(port, host);
 
 		server.start(serverBuilder);
 	}
 
-	public DeploymentInfo deployApplication(String appPath, Class<? extends Application> applicationClass) {
+	public DeploymentInfo deployApplication(String appPath, Application applicationClass) {
 		ResteasyDeployment deployment = new ResteasyDeployment();
 		deployment.setInjectorFactoryClass("org.jboss.resteasy.cdi.CdiInjectorFactory");
-		deployment.setApplicationClass(applicationClass.getName());
+		deployment.setApplication(applicationClass);
 		return server.undertowDeployment(deployment, appPath);
 	}
 
@@ -42,7 +44,7 @@ public class App {
 		server.deploy(deploymentInfo);
 	}
 
-	public static void startServer() throws ServletException {
+	public static void startServer(Application application) throws ServletException {
 		int port = DEFAULT_PORT;
 		if (System.getProperty("port") != null) {
 			port = Integer.parseInt(System.getProperty("port"));
@@ -53,7 +55,7 @@ public class App {
 			host = System.getProperty("host");
 		}
 
-		App myServer = new App(port, host);
+		myServer = new App(port, host);
 		ServletSessionConfig sessionConfig = new ServletSessionConfig();
 		sessionConfig.setName("JSESSIONID");
 		sessionConfig.setSecure(false);
@@ -61,12 +63,16 @@ public class App {
 		sessionConfig.setPath("/");
 
 		ResourceManager manager = new ClassPathResourceManager(App.class.getClassLoader(), Index.class.getPackage());
-		DeploymentInfo di = myServer.deployApplication("/api", ServiceRegistry.class)
+		DeploymentInfo di = myServer.deployApplication("/api", application)
 				.setClassLoader(App.class.getClassLoader()).setContextPath("/")
 				.setDeploymentName("Java Application Compiler").setResourceManager(manager)
 				.setServletSessionConfig(sessionConfig)
 				.addListeners(Servlets.listener(org.jboss.weld.environment.servlet.Listener.class));
 
 		myServer.deploy(di);
+	}
+
+	public static void stopServer() {
+		myServer.server.stop();		
 	}
 }
