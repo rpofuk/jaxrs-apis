@@ -1,26 +1,22 @@
 package com.github.api.processor.elements;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
-import javax.ws.rs.Path;
+import com.github.api.processor.ClassAnnotationProcessor;
+import com.github.api.processor.MethodAnotationProcessor;
+import com.github.api.request.RestRequest;
 
-import com.github.api.processor.api.MethodElement;
-import com.github.api.processor.api.MethodVisitor;
+public class SimpleMethodElement {
 
-public class SimpleMethodElement implements MethodElement {
+	private RestRequest request;
 
-	private Method method;
-
-	public SimpleMethodElement(Method method) {
-		this.method = method;
+	public SimpleMethodElement(RestRequest request) {
+		this.request = request;
 	}
 
-	@Override
-	public void accept(MethodVisitor visitor) {
-		Path path = method.getAnnotation(Path.class);		
-		if (path !=null) {
-			visitor.visit(path);
-		}
+	public void handle(Method method) {
+		Arrays.asList(method.getAnnotations()).stream().forEach(p -> new MethodAnotationProcessor(request).process(p));
 	}
 
 }

@@ -6,8 +6,6 @@ import java.lang.reflect.Method;
 import org.boon.json.ObjectMapper;
 import org.boon.json.ObjectMapperFactory;
 
-import com.github.api.processor.ClassAnnotationProcessor;
-import com.github.api.processor.MethodAnotationProcessor;
 import com.github.api.processor.elements.SimpleClassElement;
 import com.github.api.processor.elements.SimpleMethodElement;
 import com.github.api.request.PlainRestInvocator;
@@ -20,8 +18,8 @@ public class ClientProxy implements InvocationHandler {
 		RestRequest request = new RestRequest();
 		request.setBaseUrl("http://127.0.0.1:8080/api");
 
-		new SimpleClassElement(method.getDeclaringClass()).accept(new ClassAnnotationProcessor(request));
-		new SimpleMethodElement(method).accept(new MethodAnotationProcessor(request));
+		new SimpleClassElement(request).handle(method.getDeclaringClass());
+		new SimpleMethodElement(request).handle(method);
 
 		ObjectMapper mapper = ObjectMapperFactory.create();
 		String respose = new PlainRestInvocator().sendGet(request);

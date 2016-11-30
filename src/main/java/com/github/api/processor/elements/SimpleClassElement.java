@@ -1,24 +1,21 @@
 package com.github.api.processor.elements;
 
-import javax.ws.rs.Path;
+import java.util.Arrays;
 
-import com.github.api.processor.api.ClassElement;
-import com.github.api.processor.api.ClassVisitor;
+import com.github.api.processor.ClassAnnotationProcessor;
+import com.github.api.request.RestRequest;
 
-public class SimpleClassElement implements ClassElement {
+public class SimpleClassElement {
 
-	private Class<?> endpoint;
+	private RestRequest request;
 
-	public SimpleClassElement(Class<?> endpoint) {
-		this.endpoint = endpoint;
+	public SimpleClassElement(RestRequest request) {
+		super();
+		this.request = request;
 	}
 
-	@Override
-	public void accept(ClassVisitor visitor) {
-		Path path = endpoint.getAnnotation(Path.class);		
-		if (path !=null) {
-			visitor.visit(path);
-		}
+	public void handle(Class<?> clazz) {
+		Arrays.asList(clazz.getAnnotations()).stream().forEach(p -> new ClassAnnotationProcessor(request).process(p));
 	}
 
 }

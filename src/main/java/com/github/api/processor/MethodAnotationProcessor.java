@@ -1,11 +1,19 @@
 package com.github.api.processor;
 
-import javax.ws.rs.Path;
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.github.api.processor.api.MethodVisitor;
+import com.github.api.processor.method.PathHandler;
 import com.github.api.request.RestRequest;
 
-public class MethodAnotationProcessor implements MethodVisitor {
+public class MethodAnotationProcessor {
+
+	@SuppressWarnings("rawtypes")
+	private static List<AnnotationHandler> annotations = new ArrayList<>();
+	static {
+		annotations.add(new PathHandler());
+	}
 
 	RestRequest request;
 
@@ -13,9 +21,10 @@ public class MethodAnotationProcessor implements MethodVisitor {
 		this.request = request;
 	}
 
-	@Override
-	public void visit(Path path) {
-		request.addPath(path.value());
+	@SuppressWarnings("unchecked")
+	public void process(Annotation handle) {
+		annotations.stream().filter(a -> a.canHandle(handle)).forEach(a -> a.handle(handle, request));
+
 	}
 
 }
