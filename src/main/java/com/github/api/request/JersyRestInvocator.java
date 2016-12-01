@@ -38,7 +38,9 @@ public class JersyRestInvocator implements RestInvocator {
 	private WebTarget buildTarget(RestRequest request) {
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(request.getBaseUrl());
-		request.getPaths().stream().forEach(p -> target.path(p));
+		for (String path : request.getPaths()) {
+			target = target.path(path);
+		};
 		return target;
 	}
 }

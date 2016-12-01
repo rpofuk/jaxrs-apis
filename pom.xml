@@ -14,14 +14,6 @@
 			<version>2.0</version>
 		</dependency>
 
-		<!-- JSON -->
-		<dependency>
-			<groupId>io.fastjson</groupId>
-			<artifactId>boon</artifactId>
-			<version>0.7</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
-
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-jackson-provider</artifactId>

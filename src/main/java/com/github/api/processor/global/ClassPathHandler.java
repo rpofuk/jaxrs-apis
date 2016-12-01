@@ -17,7 +17,7 @@ public class ClassPathHandler implements AnnotationHandler<Path>{
 
 	@Override
 	public void handle(Path annotation, RestRequest request) {
-		request.setBaseUrl(annotation.value());
+		request.addPath(annotation.value());
 	}
 
 

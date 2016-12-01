@@ -24,6 +24,7 @@ import com.github.api.cases.dto.SimpleGetDTO;
 @RunWith(PowerMockRunner.class)
 public class ClientFactoryTest {
 
+	private static final String BASE_URL = "http://127.0.0.1:8080/api";
 	@Spy
 	SimpleGetService service = new SimpleGetService();
 
@@ -44,7 +45,7 @@ public class ClientFactoryTest {
 
 	@Test
 	public void testResponseNotNull() {
-		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class);
+		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, BASE_URL);
 		SimpleGetDTO response = simpleGetClient.listData();
 
 		Assert.assertNotNull(response);
@@ -52,7 +53,7 @@ public class ClientFactoryTest {
 
 	@Test
 	public void testServerMethodCalled() {
-		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class);
+		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, BASE_URL);
 		simpleGetClient.listData();
 
 		Mockito.verify(service, Mockito.times(1)).listData();
@@ -60,7 +61,7 @@ public class ClientFactoryTest {
 
 	@Test
 	public void testClientNotNull() {
-		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class);
+		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, BASE_URL);
 		Assert.assertNotNull(simpleGetClient);
 	}
 

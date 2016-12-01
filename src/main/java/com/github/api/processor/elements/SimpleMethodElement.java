@@ -3,7 +3,6 @@ package com.github.api.processor.elements;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import com.github.api.processor.ClassAnnotationProcessor;
 import com.github.api.processor.MethodAnotationProcessor;
 import com.github.api.request.RestRequest;
 

@@ -4,7 +4,11 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.api.processor.method.MethodDeleteHandler;
+import com.github.api.processor.method.MethodGetHandler;
 import com.github.api.processor.method.MethodPathHandler;
+import com.github.api.processor.method.MethodPostHandler;
+import com.github.api.processor.method.MethodPutHandler;
 import com.github.api.request.RestRequest;
 
 public class MethodAnotationProcessor {
@@ -13,6 +17,10 @@ public class MethodAnotationProcessor {
 	private static List<AnnotationHandler> annotations = new ArrayList<>();
 	static {
 		annotations.add(new MethodPathHandler());
+		annotations.add(new MethodGetHandler());
+		annotations.add(new MethodPostHandler());
+		annotations.add(new MethodPutHandler());
+		annotations.add(new MethodDeleteHandler());
 	}
 
 	RestRequest request;
