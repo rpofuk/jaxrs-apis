@@ -1,6 +1,8 @@
 package com.github.api.cases;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.github.api.App;
 import com.github.api.ClientFactory;
+import com.github.api.GlobalParamethers;
 import com.github.api.cases.dto.SimpleGetDTO;
 
 @PowerMockIgnore("javax.net.ssl.*")
@@ -25,8 +28,22 @@ import com.github.api.cases.dto.SimpleGetDTO;
 public class ClientFactoryTest {
 
 	private static final String BASE_URL = "http://127.0.0.1:8080/api";
+	
 	@Spy
 	SimpleGetService service = new SimpleGetService();
+
+	private GlobalParamethers params = new GlobalParamethers() {
+
+		@Override
+		public Map<String, String> getHeaders() {
+			return new HashMap<>();
+		}
+
+		@Override
+		public String getBaseUrl() {
+			return BASE_URL;
+		}
+	};
 
 	@Before
 	public void init() throws ServletException {
@@ -45,7 +62,7 @@ public class ClientFactoryTest {
 
 	@Test
 	public void testResponseNotNull() {
-		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, BASE_URL);
+		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, params);
 		SimpleGetDTO response = simpleGetClient.listData();
 
 		Assert.assertNotNull(response);
@@ -53,7 +70,7 @@ public class ClientFactoryTest {
 
 	@Test
 	public void testServerMethodCalled() {
-		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, BASE_URL);
+		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, params);
 		simpleGetClient.listData();
 
 		Mockito.verify(service, Mockito.times(1)).listData();
@@ -61,7 +78,7 @@ public class ClientFactoryTest {
 
 	@Test
 	public void testClientNotNull() {
-		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, BASE_URL);
+		SimpleGetEndpoint simpleGetClient = ClientFactory.createClient(SimpleGetEndpoint.class, params);
 		Assert.assertNotNull(simpleGetClient);
 	}
 

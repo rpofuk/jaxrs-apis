@@ -3,6 +3,7 @@ package com.github.api.request;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
@@ -15,14 +16,24 @@ public class JersyRestInvocator implements RestInvocator {
 	@Override
 	public String sendGet(RestRequest request) throws RestException {
 		WebTarget target = buildTarget(request);
-		return target.request(MediaType.APPLICATION_JSON_TYPE).get().readEntity(String.class);
+		Invocation.Builder builder = prepareRequest(target, request);
+		return builder.get().readEntity(String.class);
 	}
 
 	@Override
 	public String sendPost(RestRequest request, String payload) throws RestException {
 		WebTarget target = buildTarget(request);
 		Entity<String> payloadEntity = Entity.entity(payload, MediaType.APPLICATION_JSON);
-		return target.request(MediaType.APPLICATION_JSON_TYPE).post(payloadEntity).readEntity(String.class);
+		Invocation.Builder builder = prepareRequest(target, request);
+		
+		
+		return builder.post(payloadEntity).readEntity(String.class);
+	}
+
+	private Invocation.Builder prepareRequest(WebTarget target, RestRequest request) {
+		final Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);		
+		request.getHeaders().entrySet().forEach(p -> builder.header(p.getKey(), p.getValue().get(0)));
+		return builder;
 	}
 
 	@Override

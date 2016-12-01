@@ -13,20 +13,25 @@ import com.github.api.request.RestRequest;
 
 public class ClientProxy implements InvocationHandler {
 
-	private String baseUrl;
+	private GlobalParamethers params;
 
-	public ClientProxy(String baseUrl) {
-		this.baseUrl = baseUrl;
+	public ClientProxy(GlobalParamethers params) {
+		this.params = params;
 	}
 
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		RestRequest request = new RestRequest();
-		request.setBaseUrl(baseUrl);
-
+		request.setBaseUrl(params.getBaseUrl());
+		
 		new SimpleClassElement(request).handle(method.getDeclaringClass());
 		new SimpleMethodElement(request).handle(method);
 
+		
+		// BAD BAD BAD
+		params.getHeaders().entrySet().forEach(p -> request.addHeder(p.getKey(), p.getValue()));
+
+		
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 		String respose = "";
