@@ -13,7 +13,7 @@ public class MethodPutHandler implements AnnotationHandler<PUT> {
 
 	@Override
 	public boolean canHandle(Annotation annotation) {
-		return annotation instanceof GET;
+		return annotation instanceof PUT;
 	}
 
 	@Override
