@@ -2,6 +2,7 @@ package com.github.api;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -27,6 +28,7 @@ public class ClientProxy implements InvocationHandler {
 		new SimpleMethodElement(request).handle(method);
 
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'"));
 		String respose = "";
 		switch (request.getHttpMethod()) {
 		case GET:
