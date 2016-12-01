@@ -26,15 +26,28 @@ public class PlainRestInvocator implements RestInvocator {
 	public String sendGet(RestRequest request) throws RestException {
 		try {
 			final HttpMethod method = HttpMethod.GET;
-			String path = request.getRequestPath();
+			
+			String path = formPath(request);
 			return sendReadRequest(path, method);
 		} catch (final Exception e) {
 			throw new RestException(e);
 		}
 	}
+	
+	
+
+	private String formPath(RestRequest request) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(request.getBaseUrl());
+		
+		request.getPaths().forEach(p -> builder.append("/").append(p));
+		return request.toString();
+	}
+
+
 
 	@Override
-	public String sendPost(RestRequest request) throws RestException {
+	public String sendPost(RestRequest request, String payload) throws RestException {
 		return null;
 	}
 
@@ -44,7 +57,7 @@ public class PlainRestInvocator implements RestInvocator {
 	}
 
 	@Override
-	public String sendPut(RestRequest request) throws RestException {
+	public String sendPut(RestRequest request, String payload) throws RestException {
 		return null;
 	}
 

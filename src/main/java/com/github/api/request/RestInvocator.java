@@ -21,7 +21,7 @@ public interface RestInvocator extends Serializable{
 	 * @return Response content
 	 * @throws RestException
 	 */
-	String sendPost(RestRequest request) throws RestException;
+	String sendPost(RestRequest request, String payload) throws RestException;
 
 	/**
 	 * HTTP delete request
@@ -40,6 +40,7 @@ public interface RestInvocator extends Serializable{
 	 * @return Response content
 	 * @throws RestException
 	 */
-	String sendPut(RestRequest request) throws RestException;
+	String sendPut(RestRequest request, String payload) throws RestException;
+
 
 }

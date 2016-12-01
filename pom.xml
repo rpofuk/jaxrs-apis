@@ -20,6 +20,7 @@
 			<artifactId>boon</artifactId>
 			<version>0.7</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client -->
 
 		<dependency>
 			<groupId>org.jboss.resteasy</groupId>
@@ -58,6 +59,7 @@
 			<groupId>org.jboss.resteasy</groupId>
 			<artifactId>resteasy-cdi</artifactId>
 			<version>3.0.16.Final</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.weld.servlet</groupId>

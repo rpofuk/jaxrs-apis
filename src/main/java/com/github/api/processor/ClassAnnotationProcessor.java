@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.api.processor.global.PathHandler;
+import com.github.api.processor.global.ClassPathHandler;
 import com.github.api.request.RestRequest;
 
 public class ClassAnnotationProcessor {
@@ -12,7 +12,7 @@ public class ClassAnnotationProcessor {
 	@SuppressWarnings("rawtypes")
 	private static List<AnnotationHandler> annotations = new ArrayList<>();
 	static {
-		annotations.add(new PathHandler());
+		annotations.add(new ClassPathHandler());
 	}
 
 	RestRequest request;

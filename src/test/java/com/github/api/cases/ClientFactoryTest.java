@@ -13,12 +13,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.github.api.App;
 import com.github.api.ClientFactory;
 import com.github.api.cases.dto.SimpleGetDTO;
 
+@PowerMockIgnore("javax.net.ssl.*")
 @RunWith(PowerMockRunner.class)
 public class ClientFactoryTest {
 

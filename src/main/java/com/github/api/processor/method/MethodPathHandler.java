@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 import com.github.api.processor.AnnotationHandler;
 import com.github.api.request.RestRequest;
 
-public class PathHandler implements AnnotationHandler<Path> {
+public class MethodPathHandler implements AnnotationHandler<Path> {
 
 	@Override
 	public boolean canHandle(Annotation annotation) {

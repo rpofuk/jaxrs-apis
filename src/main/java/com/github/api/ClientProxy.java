@@ -8,7 +8,7 @@ import org.boon.json.ObjectMapperFactory;
 
 import com.github.api.processor.elements.SimpleClassElement;
 import com.github.api.processor.elements.SimpleMethodElement;
-import com.github.api.request.PlainRestInvocator;
+import com.github.api.request.JersyRestInvocator;
 import com.github.api.request.RestRequest;
 
 public class ClientProxy implements InvocationHandler {
@@ -22,7 +22,7 @@ public class ClientProxy implements InvocationHandler {
 		new SimpleMethodElement(request).handle(method);
 
 		ObjectMapper mapper = ObjectMapperFactory.create();
-		String respose = new PlainRestInvocator().sendGet(request);
+		String respose = new JersyRestInvocator().sendGet(request);
 		return mapper.readValue(respose, method.getReturnType());
 
 	}

@@ -7,7 +7,7 @@ import javax.ws.rs.Path;
 import com.github.api.processor.AnnotationHandler;
 import com.github.api.request.RestRequest;
 
-public class PathHandler implements AnnotationHandler<Path>{
+public class ClassPathHandler implements AnnotationHandler<Path>{
 
 	@Override
 	public boolean canHandle(Annotation annotation) {
@@ -17,7 +17,7 @@ public class PathHandler implements AnnotationHandler<Path>{
 
 	@Override
 	public void handle(Path annotation, RestRequest request) {
-		request.setPrefixUrl(annotation.value());
+		request.setBaseUrl(annotation.value());
 	}
 
 
