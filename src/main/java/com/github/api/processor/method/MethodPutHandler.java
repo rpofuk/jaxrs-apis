@@ -2,7 +2,6 @@ package com.github.api.processor.method;
 
 import java.lang.annotation.Annotation;
 
-import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 
 import com.github.api.processor.AnnotationHandler;
