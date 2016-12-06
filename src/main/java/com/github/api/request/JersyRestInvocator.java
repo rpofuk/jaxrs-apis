@@ -32,7 +32,7 @@ public class JersyRestInvocator implements RestInvocator {
 
 	private Invocation.Builder prepareRequest(WebTarget target, RestRequest request) {
 		final Invocation.Builder builder = target.request(MediaType.APPLICATION_JSON_TYPE);		
-		request.getHeaders().entrySet().forEach(p -> builder.header(p.getKey(), p.getValue().get(0)));
+		request.getHeaders().stream().forEach(p -> builder.header(p.getName(), p.getValue()));
 		return builder;
 	}
 

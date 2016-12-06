@@ -20,7 +20,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import com.github.api.App;
 import com.github.api.ClientFactory;
-import com.github.api.GlobalParamethers;
+import com.github.api.Context;
 import com.github.api.cases.dto.SimpleGetDTO;
 
 @PowerMockIgnore("javax.net.ssl.*")
@@ -32,7 +32,7 @@ public class ClientFactoryTest {
 	@Spy
 	SimpleGetService service = new SimpleGetService();
 
-	private GlobalParamethers params = new GlobalParamethers() {
+	private Context params = new Context() {
 
 		@Override
 		public Map<String, String> getHeaders() {
@@ -42,6 +42,11 @@ public class ClientFactoryTest {
 		@Override
 		public String getBaseUrl() {
 			return BASE_URL;
+		}
+
+		@Override
+		public String getDateFormat() {
+			return null;
 		}
 	};
 

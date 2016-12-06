@@ -1,18 +1,22 @@
 package com.github.api.request;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import com.github.api.processor.elements.Header;
 
 public class RestRequest {
 
 	private String baseUrl;
 
+	private Object body;
+
+	private String dateFormat;
+
 	private List<String> paths = new ArrayList<>();
- 
-	private Map<String, List<String>> headers = new HashMap<>();
-	
+
+	private List<Header> headers = new ArrayList<>();
+
 	HttpMethod httpMethod;
 
 	public void setBaseUrl(String baseUrl) {
@@ -38,15 +42,28 @@ public class RestRequest {
 	public void setHttpMethod(HttpMethod httpMethod) {
 		this.httpMethod = httpMethod;
 	}
-	
+
 	public void addHeder(String name, String value) {
-		if (!headers.containsKey(name)) {
-			headers.put(name, new ArrayList<>(1));			
-		}
-		headers.get(name).add(value);
+		headers.add(new Header(name, value));
 	}
 
-	public Map<String, List<String>> getHeaders() {
+	public List<Header> getHeaders() {
 		return headers;
+	}
+
+	public String getDateFormat() {
+		return dateFormat;
+	}
+
+	public void setDateFormat(String dateFormat) {
+		this.dateFormat = dateFormat;
+	}
+
+	public Object getBody() {
+		return body;
+	}
+
+	public void setBody(Object body) {
+		this.body = body;
 	}
 }
